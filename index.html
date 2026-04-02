@@ -466,8 +466,8 @@ footer {
   width: 100%; height: 200px; position: relative;
   cursor: pointer; overflow: hidden;
 }
-.project-video-thumb video {
-  width: 100%; height: 100%; object-fit: cover; pointer-events: none; display: block;
+.project-video-thumb img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
 }
 .project-video-thumb:hover .play-overlay { background: rgba(0,0,0,0.5); }
 .play-overlay {
@@ -492,7 +492,7 @@ footer {
   align-items: center; justify-content: center; padding: 16px;
 }
 #bathModal.open { display: flex; }
-.modal-inner { position: relative; max-width: 900px; width: 100%; }
+.modal-inner { position: relative; max-width: 560px; width: 100%; }
 .modal-close {
   position: absolute; top: -46px; right: 0;
   background: none; border: none; color: white;
@@ -501,7 +501,18 @@ footer {
   transition: color 0.2s;
 }
 .modal-close:hover { color: var(--orange); }
-#bathModal video { width: 100%; border-radius: 12px; display: block; }
+.modal-video-wrap {
+  position: relative;
+  padding-bottom: 177.78%; /* 9:16 for Shorts */
+  height: 0;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.modal-video-wrap iframe {
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 100%;
+  border: none; display: block;
+}
 
 /* ── ANIMATIONS ── */
 @keyframes fadeUp {
@@ -683,10 +694,10 @@ footer {
         </div>
       </div>
 
-      <!-- BATHROOM RENOVATION CARD WITH VIDEO -->
+      <!-- BATHROOM RENOVATION CARD WITH YOUTUBE VIDEO -->
       <div class="project-card">
         <div class="project-video-thumb" onclick="openBathModal()">
-          <video src="Bathroom_Transformation_Showcase_720p_caption.mp4" muted preload="metadata"></video>
+          <img src="https://img.youtube.com/vi/dGmU-IOHanA/hqdefault.jpg" alt="Bathroom Renovation"/>
           <div class="play-overlay">
             <div class="play-btn">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
@@ -895,7 +906,14 @@ footer {
 <div id="bathModal" onclick="if(event.target===this)closeBathModal()">
   <div class="modal-inner">
     <button class="modal-close" onclick="closeBathModal()">✕</button>
-    <video id="bathVideo" src="Bathroom_Transformation_Showcase_720p_caption.mp4" controls></video>
+    <div class="modal-video-wrap">
+      <iframe id="bathVideo"
+        src=""
+        data-src="https://www.youtube.com/embed/dGmU-IOHanA?autoplay=1&rel=0"
+        allowfullscreen
+        allow="autoplay; encrypted-media">
+      </iframe>
+    </div>
   </div>
 </div>
 
@@ -937,14 +955,16 @@ footer {
   // ── VIDEO MODAL ──
   function openBathModal() {
     const modal = document.getElementById('bathModal');
+    const iframe = document.getElementById('bathVideo');
+    iframe.src = iframe.dataset.src;
     modal.classList.add('open');
     document.body.style.overflow = 'hidden';
   }
   function closeBathModal() {
     const modal = document.getElementById('bathModal');
-    const video = document.getElementById('bathVideo');
+    const iframe = document.getElementById('bathVideo');
     modal.classList.remove('open');
-    video.pause();
+    iframe.src = '';
     document.body.style.overflow = '';
   }
   document.addEventListener('keydown', function(e) {
