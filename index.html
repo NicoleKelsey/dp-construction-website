@@ -670,16 +670,23 @@ footer {
   </div>
 </div>
 
-      <!-- Interior Painting -->
-      <div class="project-card">
-        <div class="project-img"><svg viewBox="0 0 480 200" xmlns="http://www.w3.org/2000/svg"><rect width="480" height="200" fill="#f0ebe4"/><rect x="0" y="170" width="480" height="30" fill="#c8b89a"/><rect x="0" y="20" width="160" height="150" fill="#e8d5b0"/><rect x="160" y="20" width="160" height="150" fill="#b8d4c4"/><rect x="320" y="20" width="160" height="150" fill="#e8d5b0"/><rect x="18" y="40" width="36" height="65" fill="#87a8c0" rx="2"/><rect x="66" y="40" width="36" height="65" fill="#87a8c0" rx="2"/><rect x="178" y="40" width="36" height="65" fill="#87a8c0" rx="2"/><rect x="226" y="40" width="36" height="65" fill="#87a8c0" rx="2"/><rect x="190" y="120" width="100" height="50" fill="#8b7355" rx="2"/></svg></div>
-        <div class="project-body">
-          <span class="project-badge">Completed</span>
-          <div class="project-title">Interior Painting & Plastering</div>
-          <div class="project-meta">Uitenhage · November 2024</div>
-          <div class="project-services">Painting · Plastering</div>
-        </div>
+     <!-- Modern Flat Renovation — VIDEO -->
+<div class="project-card">
+  <div class="project-video-thumb" onclick="openModal('flatModal','flatVideo')">
+    <img src="https://img.youtube.com/vi/sSjAOQHw5Uw/hqdefault.jpg" alt="Modern Flat Renovation"/>
+    <div class="play-overlay">
+      <div class="play-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
       </div>
+    </div>
+  </div>
+  <div class="project-body">
+    <span class="project-badge">Completed</span>
+    <div class="project-title">Modern Flat Renovation</div>
+    <div class="project-meta">Uitenhage · 2025</div>
+    <div class="project-services">Renovations · Painting</div>
+  </div>
+</div>
 
       <!-- Driveway Paving — VIDEO -->
       <div class="project-card">
@@ -952,6 +959,21 @@ footer {
   </div>
 </div>
 
+  <!-- MODERN FLAT RENOVATION VIDEO MODAL -->
+<div id="flatModal" class="video-modal" onclick="if(event.target===this)closeModal('flatModal','flatVideo')">
+  <div class="modal-inner">
+    <button class="modal-close" onclick="closeModal('flatModal','flatVideo')">✕</button>
+    <div class="modal-video-wrap">
+      <iframe id="flatVideo"
+        src=""
+        data-src="https://www.youtube.com/embed/sSjAOQHw5Uw?autoplay=1&rel=0"
+        allowfullscreen
+        allow="autoplay; encrypted-media">
+      </iframe>
+    </div>
+  </div>
+</div>
+
 <script>
   // ── NAV SCROLL ──
   window.addEventListener('scroll', () => {
@@ -1003,6 +1025,7 @@ footer {
     closeModal('bathModal', 'bathVideo');
     closeModal('pavingModal', 'pavingVideo');
     closeModal('roofModal', 'roofVideo');
+    closeModal('flatModal', 'flatVideo');
   }
 });
 
