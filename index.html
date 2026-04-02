@@ -461,6 +461,48 @@ footer {
 .app-strip p { font-size: 14px; color: var(--grey); margin-top: 8px; max-width: 380px; line-height: 1.6; }
 .app-strip-actions { display: flex; gap: 12px; flex-wrap: wrap; }
 
+/* ── VIDEO THUMBNAIL ── */
+.project-video-thumb {
+  width: 100%; height: 200px; position: relative;
+  cursor: pointer; overflow: hidden;
+}
+.project-video-thumb video {
+  width: 100%; height: 100%; object-fit: cover; pointer-events: none; display: block;
+}
+.project-video-thumb:hover .play-overlay { background: rgba(0,0,0,0.5); }
+.play-overlay {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(0,0,0,0.3); transition: background 0.2s;
+}
+.play-btn {
+  width: 56px; height: 56px;
+  background: rgba(232,66,10,0.92);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  transition: transform 0.2s, background 0.2s;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+}
+.project-video-thumb:hover .play-btn { transform: scale(1.1); background: var(--orange); }
+
+/* ── VIDEO MODAL ── */
+#bathModal {
+  display: none; position: fixed; inset: 0; z-index: 9999;
+  background: rgba(0,0,0,0.92);
+  align-items: center; justify-content: center; padding: 16px;
+}
+#bathModal.open { display: flex; }
+.modal-inner { position: relative; max-width: 900px; width: 100%; }
+.modal-close {
+  position: absolute; top: -46px; right: 0;
+  background: none; border: none; color: white;
+  font-size: 30px; cursor: pointer; line-height: 1;
+  font-family: sans-serif; padding: 4px 10px;
+  transition: color 0.2s;
+}
+.modal-close:hover { color: var(--orange); }
+#bathModal video { width: 100%; border-radius: 12px; display: block; }
+
 /* ── ANIMATIONS ── */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(24px); }
@@ -640,15 +682,25 @@ footer {
           <div class="project-services">Paving</div>
         </div>
       </div>
+
+      <!-- BATHROOM RENOVATION CARD WITH VIDEO -->
       <div class="project-card">
-        <div class="project-img"><svg viewBox="0 0 480 200" xmlns="http://www.w3.org/2000/svg"><rect width="480" height="200" fill="#d4c5a9"/><rect x="60" y="46" width="360" height="154" fill="#c8b89a" rx="4"/><rect x="80" y="72" width="130" height="128" fill="#b8a882"/><rect x="270" y="72" width="130" height="128" fill="#b8a882"/><rect x="98" y="88" width="38" height="60" fill="#7a9bb5" rx="2"/><rect x="150" y="88" width="38" height="60" fill="#7a9bb5" rx="2"/><rect x="192" y="104" width="96" height="96" fill="#8b7355" rx="2"/><polygon points="40,48 240,6 440,48" fill="#8b6f4e"/></svg></div>
+        <div class="project-video-thumb" onclick="openBathModal()">
+          <video src="Bathroom_Transformation_Showcase_720p_caption.mp4" muted preload="metadata"></video>
+          <div class="play-overlay">
+            <div class="play-btn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+          </div>
+        </div>
         <div class="project-body">
           <span class="project-badge">Completed</span>
-          <div class="project-title">Full Home Renovation</div>
+          <div class="project-title">New Bathroom Renovation</div>
           <div class="project-meta">Despatch · July 2024</div>
-          <div class="project-services">Renovations · Painting · Tiling</div>
+          <div class="project-services">Renovations · Tiling</div>
         </div>
       </div>
+
     </div>
   </div>
 </div>
@@ -839,11 +891,18 @@ footer {
   Chat with us
 </a>
 
+<!-- VIDEO MODAL -->
+<div id="bathModal" onclick="if(event.target===this)closeBathModal()">
+  <div class="modal-inner">
+    <button class="modal-close" onclick="closeBathModal()">✕</button>
+    <video id="bathVideo" src="Bathroom_Transformation_Showcase_720p_caption.mp4" controls></video>
+  </div>
+</div>
+
 <script>
   // ── NAV SCROLL ──
   window.addEventListener('scroll', () => {
     document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 20);
-    // Active nav link
     const sections = ['home','services','projects','quote','contact'];
     let cur = 'home';
     sections.forEach(id => {
@@ -874,6 +933,23 @@ footer {
     const msg = encodeURIComponent('Hi ' + name + ', I found your website and would like to enquire about your services.');
     window.open('https://wa.me/' + number + '?text=' + msg, '_blank');
   }
+
+  // ── VIDEO MODAL ──
+  function openBathModal() {
+    const modal = document.getElementById('bathModal');
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeBathModal() {
+    const modal = document.getElementById('bathModal');
+    const video = document.getElementById('bathVideo');
+    modal.classList.remove('open');
+    video.pause();
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeBathModal();
+  });
 
   // ── QUOTE SUBMIT ──
   function submitQuote() {
